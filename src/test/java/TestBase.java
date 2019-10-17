@@ -6,6 +6,8 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 import io.appium.java_client.AppiumDriver;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
+import java.time.LocalDate;
 
 public class TestBase {
     private static String testName = "DEFAULT";
@@ -70,6 +73,8 @@ public class TestBase {
         try{
             if (result.getStatus() == ITestResult.FAILURE)
             {
+                File file = driver.getScreenshotAs(OutputType.FILE);
+                FileUtils.copyFile(file, new File(String.format("%s%s%s_%s.png", testVideoRecordingsDir, File.separator, result.getName(), LocalDate.now())));
                 logger.log(Status.FAIL, MarkupHelper.createLabel(result.getName() + " Test case FAILED due to below issues:", ExtentColor.RED));
                 logger.fail(result.getThrowable());
             }
