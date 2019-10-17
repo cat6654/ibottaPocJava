@@ -1,2 +1,6 @@
-target/**
-test_videos/**
+test_videos
+extent_reports
+chromedriver.log
+.idea
+/.idea
+target
