@@ -1,5 +1,2 @@
-test_videos
-extent_reports
-chromedriver.log
-.idea
-/.idea
+target/**
+test_videos/**
