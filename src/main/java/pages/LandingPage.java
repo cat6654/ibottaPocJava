@@ -34,7 +34,7 @@ public class LandingPage extends BasePage{
         }
     }
 
-    public void login(String username, String password){
+    public MainPage login(String username, String password){
         loginLink.click();
         emailInput.clear();
         emailInput.sendKeys(username);
@@ -42,6 +42,7 @@ public class LandingPage extends BasePage{
         passwordInput.setValue(password);
 
         loginButton.click();
+        return new MainPage(driver);
     }
 
     public boolean isLoginButtonVisible() {

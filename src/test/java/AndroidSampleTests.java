@@ -1,7 +1,6 @@
 import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.HomePage;
 import pages.LandingPage;
 import utils.TestConstants;
 
@@ -39,6 +38,26 @@ public class AndroidSampleTests extends TestBase {
         HomePage homePage = new HomePage(driver);
 
         Assert.assertTrue(homePage.isHomeButtonVisible(), "Home button should be visible after successful login");
+        logger.log(Status.PASS, "Verify if logged in");
+    }
+
+    /**
+     * ID: 3 Global search works
+     */
+    @Test
+    public void globalSearchWorks(){
+        logger = extent.createTest("ID: 3 Global search works");
+        logger.assignCategory("Sample");
+        logger.assignAuthor("Ivan Litynskyi");
+
+        LandingPage landingPage = new LandingPage(driver);
+        landingPage.login(TestConstants.Users.getUserOne(), TestConstants.Users.getUserOnePassword());
+        logger.log(Status.PASS, "Enter credentials and click login button");
+
+        MainPage mainPage = new MainPage(driver);
+        mainPage.clickSearchItem().searchForTheItem("Banana");
+        landingPage.isLoginButtonVisible();
+        // Assert.assertFalse(landingPage.isLoginButtonVisible(), "Login button should not be visible after successful login");
         logger.log(Status.PASS, "Verify if logged in");
     }
 }
