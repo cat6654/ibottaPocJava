@@ -1,6 +1,7 @@
 import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
 import pages.LandingPage;
 import utils.TestConstants;
 
@@ -35,7 +36,9 @@ public class AndroidSampleTests extends TestBase {
         landingPage.login(TestConstants.Users.getUserOne(), TestConstants.Users.getUserOnePassword());
         logger.log(Status.PASS, "Enter credentials and click login button");
 
-        Assert.assertFalse(landingPage.isLoginButtonVisible(), "Login button should not be visible after successful login");
+        HomePage homePage = new HomePage(driver);
+
+        Assert.assertTrue(homePage.isHomeButtonVisible(), "Home button should be visible after successful login");
         logger.log(Status.PASS, "Verify if logged in");
     }
 }

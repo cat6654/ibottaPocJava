@@ -39,7 +39,7 @@ public class LandingPage extends BasePage{
         emailInput.clear();
         emailInput.sendKeys(username);
         passwordInput.clear();
-        passwordInput.sendKeys(password);
+        passwordInput.setValue(password);
 
         loginButton.click();
     }
