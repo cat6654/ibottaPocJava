@@ -1,5 +1,7 @@
 package utils;
 
+import lombok.Getter;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,52 +29,32 @@ public class TestConstants {
     }
 
     public static final class Constants {
-        private static final String APP_PACKAGE = prop.getProperty("app_package");
-        private static final String APP_ACTIVITY = prop.getProperty("app_activity");
-        private static final String LOCAL_ANDROID_APP_KEYWORD = prop.getProperty("local_android_app_keyword");
-        private static final String DEVICE_NAME = prop.getProperty("device_name");
-        private static final String ANDROID_PLATFORM_NAME = prop.getProperty("android_platform_name");
-        private static final String IOS_PLATFORM_NAME = prop.getProperty("ios_platform_name");
-        private static final String ANDROID_AUTOMATION_NAME = prop.getProperty("android_automation_name");
-        private static final String IOS_AUTOMATION_NAME = prop.getProperty("ios_automation_name");
-        private static final String SESSION_START_TIMEOUT = prop.getProperty("session_start_timeout");
+        @Getter
+        private static final String appPackage = prop.getProperty("app_package");
 
-        public static String getAppPackage() {
-            return APP_PACKAGE;
-        }
+        @Getter
+        private static final String appActivity = prop.getProperty("app_activity");
 
-        public static String getAppActivity() {
-            return APP_ACTIVITY;
-        }
+        @Getter
+        private static final String localAndroidAppKeyword = prop.getProperty("local_android_app_keyword");
 
+        @Getter
+        private static final String deviceName = prop.getProperty("device_name");
 
-        public static String getLocalAndroidAppKeyword() {
-            return LOCAL_ANDROID_APP_KEYWORD;
-        }
+        @Getter
+        private static final String androidPlatformName = prop.getProperty("android_platform_name");
 
-        public static String getDeviceName() {
-            return DEVICE_NAME;
-        }
+        @Getter
+        private static final String iosPlatformName = prop.getProperty("ios_platform_name");
 
-        public static String getAndroidPlatformName() {
-            return ANDROID_PLATFORM_NAME;
-        }
+        @Getter
+        private static final String androidAutomationName = prop.getProperty("android_automation_name");
 
-        public static String getIosPlatformName() {
-            return IOS_PLATFORM_NAME;
-        }
+        @Getter
+        private static final String iosAutomationName = prop.getProperty("ios_automation_name");
 
-        public static String getAndroidAutomationName() {
-            return ANDROID_AUTOMATION_NAME;
-        }
-
-        public static String getIosAutomationName() {
-            return IOS_AUTOMATION_NAME;
-        }
-
-        public static String getSessionStartTimeout() {
-            return SESSION_START_TIMEOUT;
-        }
+        @Getter
+        private static final String sessionStartTimeout = prop.getProperty("session_start_timeout");
 
         public static String getLocalAppBasePath(){
             return String.format("%sapp%sbuild%soutputs%sapk%s", File.separator, File.separator, File.separator, File.separator, File.separator);
