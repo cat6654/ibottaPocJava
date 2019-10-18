@@ -18,10 +18,12 @@ public class DriverFactory {
 
         switch(platformType){
             case iOS: {
-                capabilities.setCapability("app", "Don't have iOS app yet");
+                capabilities.setCapability(MobileCapabilityType.APP, "");
                 capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, TestConstants.Constants.getIosAutomationName());
-                capabilities.setCapability("deviceName", TestConstants.Constants.getDeviceName());
-                capabilities.setCapability("platformName", TestConstants.Constants.getIosPlatformName());
+                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, TestConstants.Constants.getIosDeviceName());
+                capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, TestConstants.Constants.getIosPlatformName());
+                capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, TestConstants.Constants.getBrowserName());
+                capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, TestConstants.Constants.getSessionStartTimeout());
 
                 driver = new IOSDriver(serverAddress, capabilities);
                 break;
@@ -29,7 +31,7 @@ public class DriverFactory {
             case Android: {
                 String apkPath = TestUtils.getApkPath();
                 if (!apkPath.isEmpty()) {
-                    capabilities.setCapability("app", apkPath);
+                    capabilities.setCapability(MobileCapabilityType.APP, apkPath);
                 } else {
                     System.out.println(String.format("Didn't find any *.apk at %s... Trying to launch existing application.", TestConstants.Constants.getLocalAppBasePath()));
                     capabilities.setCapability("appActivity", TestConstants.Constants.getAppActivity());
@@ -38,15 +40,15 @@ public class DriverFactory {
 
                 List<String> devices = TestUtils.getConnectedDevicesUDID();
                 if (devices.iterator().hasNext()) {
-                    capabilities.setCapability("udid", devices.iterator().next());
+                    capabilities.setCapability(MobileCapabilityType.UDID, devices.iterator().next());
                 } else {
                     System.out.println(String.format("Didn't find any launched ABDs or connected devices. Trying to launch emulator with name: %s", avdName));
                     capabilities.setCapability("avd", avdName);
                 }
-                capabilities.setCapability("deviceName", TestConstants.Constants.getDeviceName());
-                capabilities.setCapability("platformName", TestConstants.Constants.getAndroidPlatformName());
+                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, TestConstants.Constants.getAndroidDeviceName());
+                capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, TestConstants.Constants.getAndroidPlatformName());
                 capabilities.setCapability("autoGrantPermissions", true);
-                capabilities.setCapability("newCommandTimeout", TestConstants.Constants.getSessionStartTimeout());
+                capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, TestConstants.Constants.getSessionStartTimeout());
                 capabilities.setCapability("autoDismissAlerts", true);
 
 

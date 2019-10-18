@@ -39,7 +39,16 @@ public class TestConstants {
         private static final String localAndroidAppKeyword = prop.getProperty("local_android_app_keyword");
 
         @Getter
-        private static final String deviceName = prop.getProperty("device_name");
+        private static final String androidDeviceName = prop.getProperty("android_device_name");
+
+        @Getter
+        private static final String iosDeviceName = prop.getProperty("ios_device_name");
+
+        @Getter
+        private static final String iosPlatformVersion = prop.getProperty("ios_platform_version");
+
+        @Getter
+        private static final String browserName = prop.getProperty("browser_name");
 
         @Getter
         private static final String androidPlatformName = prop.getProperty("android_platform_name");

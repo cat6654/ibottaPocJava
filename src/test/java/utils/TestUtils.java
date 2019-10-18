@@ -1,5 +1,8 @@
 package utils;
 
+import entities.ComAppleCoreSimulatorSimRuntimeIOS124;
+import entities.ComAppleCoreSimulatorSimRuntimeIOS131;
+import entities.SimctlListOutput;
 import org.monte.media.Format;
 import org.monte.media.FormatKeys;
 import org.monte.media.math.Rational;
@@ -7,11 +10,13 @@ import org.monte.media.math.Rational;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.monte.media.FormatKeys.*;
 import static org.monte.media.VideoFormatKeys.*;
@@ -99,5 +104,40 @@ public class TestUtils {
         for (File movie : createdMovieFiles) {
             System.out.println("New test recording created: " + movie.getAbsolutePath());
         }
+    }
+
+    public static List<String> getBootedIphoneSimulatorsUDID(){
+        List<String> bootedDevices = new ArrayList<>();
+        try {
+            String commandToExecute = "xcrun simctl list --json";
+            String commandResult = CommandExecutor.executeCommand(commandToExecute, true);
+            SimctlListOutput result = JsonConverter.deserializeToCustomClass(commandResult, SimctlListOutput.class);
+
+            List<ComAppleCoreSimulatorSimRuntimeIOS131> bootedIOS131Devices = result.getDevices()
+                    .getComAppleCoreSimulatorSimRuntimeIOS131()
+                    .stream()
+                    .filter(device -> device.getState().equalsIgnoreCase("Booted")).collect(Collectors.toList());
+            List<ComAppleCoreSimulatorSimRuntimeIOS124> bootedIOS124Devices = result.getDevices()
+                    .getComAppleCoreSimulatorSimRuntimeIOS124()
+                    .stream()
+                    .filter(device -> device.getState().equalsIgnoreCase("Booted")).collect(Collectors.toList());
+
+            bootedDevices.addAll(
+                    bootedIOS131Devices.stream().map(ComAppleCoreSimulatorSimRuntimeIOS131::getUdid)
+                    .collect(Collectors.toList())
+            );
+            bootedDevices.addAll(
+                    bootedIOS124Devices.stream().map(ComAppleCoreSimulatorSimRuntimeIOS124::getUdid)
+                            .collect(Collectors.toList())
+            );
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+        }
+
+        if (bootedDevices.size() == 0) {
+            System.out.println("There are no booted ios devices. \n Check the 'xcrun simctl list' command output");
+        }
+        return bootedDevices;
     }
 }
