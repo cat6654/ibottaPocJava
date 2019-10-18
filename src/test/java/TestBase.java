@@ -26,6 +26,7 @@ public class TestBase {
     private static final String testExtentReportsDir = TestConstants.Constants.getTestExtentReportsDir(userDir);
     protected static final String testVideoRecordingsDir = TestConstants.Constants.getTestVideoRecordingsDir(userDir);
     private static String AVD_NAME = System.getProperty("AVD_NAME");
+    private static String IPHONE_NAME = System.getProperty("IPHONE_NAME");
     public static ExtentHtmlReporter htmlReporter;
     public static ExtentReports extent;
     public static ExtentTest logger;
@@ -50,12 +51,20 @@ public class TestBase {
     }
 
     @BeforeClass
-    public static void setup() throws MalformedURLException {
+    public static void setup(Method method) throws MalformedURLException {
+        //TODO: think of better way setting smartphone emulator name and getting relevant driver
         if (AVD_NAME == null || AVD_NAME.isEmpty()) {
             AVD_NAME = "Pixel_2_API_29";
         }
+        if (IPHONE_NAME == null || IPHONE_NAME.isEmpty()) {
+            IPHONE_NAME = "iPhone 11 Pro Max";
+        }
 
-        driver = DriverFactory.getDriver(PlatformType.Android, AVD_NAME);
+        if(method.getName().contains("IOS")) {
+            driver = DriverFactory.getDriver(PlatformType.iOS, AVD_NAME);
+        } else {
+            driver = DriverFactory.getDriver(PlatformType.Android, AVD_NAME);
+        }
     }
 
     @BeforeMethod(alwaysRun = true)
