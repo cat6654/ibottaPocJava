@@ -52,12 +52,11 @@ public class AndroidSampleTests extends TestBase {
         logger.assignAuthor("Ivan Litynskyi");
 
         LandingPage landingPage = new LandingPage(driver);
-        landingPage.login(TestConstants.Users.getUserOne(), TestConstants.Users.getUserOnePassword());
+        HomePage homePage = landingPage.login(TestConstants.Users.getUserOne(), TestConstants.Users.getUserOnePassword());
         logger.log(Status.PASS, "Enter credentials and click login button");
 
-        HomePage mainPage = new HomePage(driver);
-        mainPage.clickSearchItem().searchForTheItem("Banana");
-        //TODO
+        homePage.clickSearchItem().searchForTheItem("Banana");
+        //TODO complete the test
         logger.log(Status.PASS, "Search works correctly");
     }
 }
